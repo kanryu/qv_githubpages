@@ -4,13 +4,32 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
-{% seo %}
 
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <meta name="viewport" content="width=device-width">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+//        $('#main_content').headsmart()
+  	    var st_version = $("strong:contains('release_version')");
+	      if(st_version.length>0) {
+	        // replace current version from QuickViewer.pro
+	        var prourl = 'https://raw.githubusercontent.com/kanryu/quickviewer/master/QuickViewer/QuickViewer.pro';
+	        var request = $.get(prourl, function(data) {
+	          data.split("\n").forEach(function(line) {
+	            console.log(request.getAllResponseHeaders());
+	            if(!line.startsWith('VERSION = ')) return;
+	            var current = line.substring(10);
+	            st_version.text(current);
+	          });
+	        });
+        }
+      })
+    </script>
+    <title>{% if page.fulltitle %}{{ page.fulltitle }}{% else %}{{ page.title }}{{ site.title_suffix }}{% endif %}</title>
   </head>
   <body>
     <div class="wrapper">
